@@ -2,30 +2,40 @@ import mysql from "mysql";
 import bcrypt from "bcrypt";
 import sqlConfig from "./../../config/sqlconfig.js";
 import OperationStatus from "./../models/OperationStatus.js";
+import User from "./../models/User.js";
 
 export default class SQLConnector {
-  con = mysql.createConnection(sqlConfig);
+  static connection = mysql.createConnection(sqlConfig);
 
   static getAllUsers() {
     con.query("SELECT * FROM users");
   }
+
   static addNewUserToDatabase(email, password) {
     return new Promise((resolve) => {
       bcrypt.genSalt().then((result) => {
         bcrypt.hash(password, result).then((pass) => {
-          con.query(
-            "INSET INTO users (pass_hash, email) VALUES(?,?)",
+          this.connection.query(
+            "INSERT INTO users (pass_hash, email) VALUES(?,?)",
             [pass, email],
             (err, rows) => {
               if (err) {
-                resolve(
-                  new OperationStatus(
-                    500,
-                    "user could not have been added to db"
-                  )
-                );
+                if (err.errno === 1062) {
+                  resolve(
+                    new OperationStatus(400, "user is already registered")
+                  );
+                } else {
+                  resolve(
+                    new OperationStatus(
+                      400,
+                      "user could not have been added to database"
+                    )
+                  );
+                }
               } else {
-                resolve(new OperationStatus(200));
+                resolve(
+                  new OperationStatus(200, "successfully registered new user")
+                );
               }
             }
           );
@@ -33,22 +43,33 @@ export default class SQLConnector {
       });
     });
   }
+
   static loginUser(email, password) {
+    console.log(email + " " + password);
     return new Promise((resolve) => {
-      con.query("SELECT * FROM users WHERE email=?", email, (err, rows) => {
-        if (err) throw err;
-        if (rows.length == 0) {
-          new OperationStatus(500, "user does not exist");
-        } else {
-          bcrypt.compare(password, rows[0].pass_hash).then((result) => {
-            if (result) {
-              resolve(new OperationStatus(200));
-            } else {
-              resolve(new OperationStatus(401, "password does not match"));
-            }
-          });
+      this.connection.query(
+        "SELECT * FROM users WHERE email=?",
+        email,
+        (err, rows) => {
+          if (err) throw err;
+          if (rows.length == 0) {
+            resolve(new OperationStatus(400, "user does not exist"));
+          } else {
+            bcrypt.compare(password, rows[0].pass_hash).then((result) => {
+              if (result) {
+                let toReturn = new OperationStatus(
+                  200,
+                  "login was successful",
+                  new User(rows[0].id, rows[0].email)
+                );
+                resolve(toReturn);
+              } else {
+                resolve(new OperationStatus(401, "password does not match"));
+              }
+            });
+          }
         }
-      });
+      );
     });
   }
 }
