@@ -1,0 +1,14 @@
+.footer {
+  background-color: $light-grey;
+  padding: 3rem 1.5rem;
+
+  .content {
+    a:visited {
+      text-decoration: none;
+			color: $dark-grey;
+    }
+  }
+	.credits{
+		color: $grey;
+	}
+}

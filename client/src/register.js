@@ -1,5 +1,0 @@
-function register(){
-	return(
-		<div>
-	)
-}
