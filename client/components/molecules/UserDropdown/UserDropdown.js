@@ -12,8 +12,12 @@ export default function UserDropdown({ open, closeDropdown }) {
 
   const dropdown = useRef(null);
 
-  const dropdownListener = (e) =>
-    !e.path.includes(dropdown.current) && open && closeDropdown();
+  const dropdownListener = (e) => {
+    // don't want to have useless errors from this
+    if (e.path) {
+      !e.path.includes(dropdown.current) && open && closeDropdown();
+    }
+  };
 
   useEffect(() => {
     window.addEventListener("click", dropdownListener);

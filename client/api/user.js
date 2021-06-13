@@ -14,5 +14,5 @@ export const putUserPassword = (passwordInfo) =>
     .then(handleSuccess)
     .catch(handleError);
 
-export const deleteUser = (info) =>
+export const deleteUser = () =>
   request.delete("/api/user").then(handleSuccess).catch(handleError);

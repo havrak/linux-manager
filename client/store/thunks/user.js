@@ -1,17 +1,21 @@
 import { snakeToCamelCase } from "json-style-converter/es5";
 import { store as RNC } from "react-notifications-component";
+import { push } from "connected-react-router";
 
-import { getUser, putUser, putUserPassword, userDelete } from "_api/user";
+import { getUser, putUser, putUserPassword, deleteUser } from "_api/user";
 import { updateUser } from "_actions/user";
 
 import { postLogout } from "_api/auth";
+import { logout } from "_actions/user";
 
 import { dispatchError } from "_utils/api";
 
 export const attemptDeleteUser = () => (dispatch) => {
-  postLogout().then((data) => {
-    deleteUser().then((data) => {
-      RCN.addNotification({
+  deleteUser()
+    .then((data) => {
+      dispatch(logout());
+
+      RNC.addNotification({
         title: "Success! User was deleted",
         message: data.message,
         type: "success",
@@ -22,8 +26,11 @@ export const attemptDeleteUser = () => (dispatch) => {
           duration: 5000,
         },
       });
-    });
-  });
+
+      dispatch(push("/login"));
+      return data;
+    })
+    .catch(dispatchError(dispatch));
 };
 
 export const attemptGetUser = () => (dispatch) =>

@@ -2,7 +2,7 @@ import { push } from "connected-react-router";
 import { snakeToCamelCase } from "json-style-converter/es5";
 import { store as RNC } from "react-notifications-component";
 
-import { postRegister, postLogin, postLogout, postDelete } from "_api/auth";
+import { postRegister, postLogin, postLogout } from "_api/auth";
 import { login, logout } from "_actions/user";
 
 import { dispatchError } from "_utils/api";

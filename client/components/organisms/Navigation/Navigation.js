@@ -37,11 +37,6 @@ export default function Navigation({ pathname }) {
       ? pathname === "/todo"
       : R.slice(0, 6, pathname) === "/todo/";
 
-  const isSettings =
-    pathname.length === 9
-      ? pathname === "/settings"
-      : R.slice(0, 10, pathname) === "/settings/";
-
   return (
     <Navbar fixed="top" shadow>
       <Container>
@@ -85,7 +80,7 @@ export default function Navigation({ pathname }) {
                 <Image size="32x32">
                   <Image.Content
                     className="profile-img"
-                    src={user.profilePic || "/images/default-profile.png"}
+                    src={user.usernameCase}
                   />
                 </Image>
                 <span className="dropdown-caret" />
@@ -114,15 +109,6 @@ export default function Navigation({ pathname }) {
                 link
               >
                 <Title size="6">Machine List</Title>
-              </Navbar.Item>
-              <Navbar.Item
-                className="is-hidden-mobile"
-                onClick={() => dispatch(push("/settings"))}
-                active={isSettings}
-                tab
-                link
-              >
-                <Title size="6">Settings</Title>
               </Navbar.Item>
             </Navbar.Start>
             <Navbar.End>
