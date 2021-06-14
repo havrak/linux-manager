@@ -11,7 +11,7 @@ export default function TodoSection() {
   return (
     <Section className="todo-section">
       <Title size="1" className="has-text-centered">
-        Todo List:
+        Machines key:
       </Title>
       <Columns>
         <Column size="8" offset="2" className="has-text-centered">
