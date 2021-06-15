@@ -18,4 +18,7 @@ export const deleteMachineKey = (info) =>
     .then(handleSuccess)
     .catch(handleError);
 
-export const downloadCollector = () => {};
+//export const downloadCollector = () => {};
+
+export const getSystemInformations = () =>
+  request.get("/api/machines/data").then(handleSuccess).catch(handleError);
