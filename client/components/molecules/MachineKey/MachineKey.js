@@ -5,11 +5,11 @@ import { parseISO, formatDistanceToNow } from "date-fns";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons/faTrashAlt";
-import { faBan } from "@fortawesome/free-solid-svg-icons/faBan";
-import { faPencilAlt } from "@fortawesome/free-solid-svg-icons/faPencilAlt";
-import { faSave } from "@fortawesome/free-solid-svg-icons/faSave";
-import { faSquare } from "@fortawesome/free-regular-svg-icons/faSquare";
-import { faCheckSquare } from "@fortawesome/free-regular-svg-icons/faCheckSquare";
+//import { faBan } from "@fortawesome/free-solid-svg-icons/faBan";
+//import { faPencilAlt } from "@fortawesome/free-solid-svg-icons/faPencilAlt";
+//import { faSave } from "@fortawesome/free-solid-svg-icons/faSave";
+//import { faSquare } from "@fortawesome/free-regular-svg-icons/faSquare";
+//import { faCheckSquare } from "@fortawesome/free-regular-svg-icons/faCheckSquare";
 
 import { attemptDeleteMachineKey } from "_thunks/machineKeys";
 import ConfirmModal from "_organisms/ConfirmModal";
@@ -17,11 +17,11 @@ import ConfirmModal from "_organisms/ConfirmModal";
 const fromNow = (date) =>
   formatDistanceToNow(parseISO(date), { addSuffix: true });
 
-export default function Todo({ id, name, key, createdAt }) {
+export default function MachineKey({ id, name, key, createdAt }) {
   const dispatch = useDispatch();
 
-  const [name, setName] = useState(name);
-  const [key, setKey] = useState(key);
+  // const [name, setName] = useState(name);
+  // const [key, setKey] = useState(key);
   const [confirm, setConfirm] = useState(false);
   const [createdMessage, setCreatedMessage] = useState("");
 
@@ -40,7 +40,7 @@ export default function Todo({ id, name, key, createdAt }) {
   const openModal = () => setConfirm(true);
   const closeModal = () => setConfirm(false);
 
-  const deleteTodo = () => dispatch(attemptDeleteTodo(id));
+  const deleteMachineKey = () => dispatch(attemptDeleteMachineKey(id));
 
   return (
     <li className="todo box">
@@ -48,11 +48,11 @@ export default function Todo({ id, name, key, createdAt }) {
         <figure className="media-left"></figure>
         <div className="media-content">
           <div className="content">
-            module './todos
             <p>
               <small>{`created ${createdMessage}`}</small>
             </p>
-            <p>{text}</p>
+            <p>{key}</p>
+            <p>{name}</p>
           </div>
 
           <nav className="level is-mobile">
@@ -73,9 +73,9 @@ export default function Todo({ id, name, key, createdAt }) {
       </article>
       <ConfirmModal
         confirm={confirm}
-        closeModal={closeModal}
-        deleteTodo={deleteTodo}
-        text={"Are you sure you want to delete this item?"}
+        onCancel={closeModal}
+        onTrue={deleteMachineKey}
+        text={"Are you sure you want to delete this public key?"}
       />
     </li>
   );
@@ -83,12 +83,11 @@ export default function Todo({ id, name, key, createdAt }) {
 
 Todo.propTypes = {
   id: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  completed: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
+  key: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-  updatedAt: PropTypes.string,
 };
 
-Todo.defaultProps = {
-  updatedAt: null,
-};
+// Todo.defaultProps = {
+//   updatedAt: null,
+// };

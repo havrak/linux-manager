@@ -24,7 +24,7 @@ export default function TodoPage() {
 
   return (
     !loading && (
-      <div className="todo-page page">
+      <div className="machineKey-page page">
         <MachineKeySection />
       </div>
     )

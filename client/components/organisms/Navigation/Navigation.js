@@ -34,8 +34,8 @@ export default function Navigation({ pathname }) {
 
   const isTodo =
     pathname.length === 5
-      ? pathname === "/todo"
-      : R.slice(0, 6, pathname) === "/todo/";
+      ? pathname === "/machinekey"
+      : R.slice(0, 6, pathname) === "/machineKey/";
 
   return (
     <Navbar fixed="top" shadow>
@@ -103,7 +103,7 @@ export default function Navigation({ pathname }) {
               </Navbar.Item>
               <Navbar.Item
                 className="is-hidden-mobile"
-                onClick={() => dispatch(push("/todo"))}
+                onClick={() => dispatch(push("/machinekey"))}
                 active={isTodo}
                 tab
                 link

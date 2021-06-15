@@ -9,7 +9,7 @@ import {
 
 import { LOGOUT_USER } from "_actions/user";
 
-export function machineKeys(
+export function machineKey(
   //state = {
   //  completed: false,
   //},

@@ -10,7 +10,7 @@ import {
   setMachineKeys,
   addMachineKey,
   removeMachineKey,
-} from "_actions/machines";
+} from "_actions/machineKeys";
 
 import { dispatchError } from "_utils/api";
 
