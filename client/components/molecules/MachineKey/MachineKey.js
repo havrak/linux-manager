@@ -40,7 +40,10 @@ export default function MachineKey({ id, name, publicKey, createdAt }) {
   const openModal = () => setConfirm(true);
   const closeModal = () => setConfirm(false);
 
-  const deleteMachineKey = () => dispatch(attemptDeleteMachineKey(id));
+  const deleteMachineKey = () => {
+    dispatch(attemptDeleteMachineKey(id));
+    closeModal();
+  };
   return (
     <li className="todo box">
       <article className="media">

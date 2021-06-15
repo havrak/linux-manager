@@ -121,9 +121,8 @@ async function sendData() {
     signingKeys: privateKey,
   });
   console.log(signedMessage);
-  console.log(`${config.serverLocation}:${config.serverPort}/api/machines/`);
   request
-    .put(`${config.serverLocation}:${config.serverPort}/api/machines/`)
+    .post(`${config.serverLocation}:${config.serverPort}/api/machines/data`)
     .send({ publicKey: config.publicKey, signedMessage: signedMessage })
     .then(() => {
       console.log("data has been sent to the server");
@@ -196,7 +195,8 @@ try {
                         (err) => {
                           if (err) throw err;
 
-                          console.log("Config created"); // Success
+                          console.log("Config created\n"); // Success
+                          console.log(config.publicKey);
                           process.exit(0);
                         }
                       );

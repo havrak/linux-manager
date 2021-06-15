@@ -15,7 +15,7 @@ export default function AddMachineKey() {
 
   const handleAddMachineKey = () => {
     if (key && name) {
-      dispatch(attemptAddMachineKey(name, key));
+      dispatch(attemptAddMachineKey(name, key.replace(/\s/g, "")));
       setName("");
       setKey("");
     }

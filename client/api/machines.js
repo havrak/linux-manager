@@ -17,3 +17,5 @@ export const deleteMachineKey = (info) =>
     .send(info)
     .then(handleSuccess)
     .catch(handleError);
+
+export const downloadCollector = () => {};

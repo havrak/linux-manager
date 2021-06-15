@@ -5,6 +5,7 @@ import {
   getMachineKeys,
   postMachineKey,
   deleteMachineKey,
+  downloadCollector,
 } from "_api/machines";
 import {
   setMachineKeys,
@@ -48,10 +49,11 @@ export const attemptAddMachineKey = (name, key) => (dispatch) => {
     })
     .catch(dispatchError(dispatch));
 };
-export const attemptDeleteMachineKey = (id) => (dispatch) =>
+export const attemptDeleteMachineKey = (id) => (dispatch) => {
   deleteMachineKey({ id })
     .then((data) => {
       dispatch(removeMachineKey(id));
       return data;
     })
     .catch(dispatchError(dispatch));
+};
