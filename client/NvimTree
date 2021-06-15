@@ -1,0 +1,39 @@
+~/prog/web/mern-boilerplate/client/..
+│  api
+│  assets
+│   components
+│ │  atoms
+│ │  environment
+│ │   molecules
+│ │  organisms
+│ │ │  ChangePassword
+│ │ │  ChangeUsername
+│ │ │  ConfirmModal
+│ │ │  DeleteAccount
+│ │ │  Footer
+│ │ │  Login
+│ │ │  Navigation
+│ │ │  Register
+│ │ └  TodoList
+│ │   │  index.js
+│ │   └  TodoList.js
+│ │  pages
+│ │ │  HomePage
+│ │ │  LoginPage
+│ │ │  LostPage
+│ │ │  RegisterPage
+│ │ │  SettingsPage
+│ │ │  TodoPage
+│ │ │ │  index.js
+│ │ │ └  TodoPage.js
+│ │ └  WelcomePage
+│ └  ✗ templates
+│  ✗ config
+│  hooks
+│  store
+│  ✗ styles
+│  ✗ utils
+│  history.js
+│  index.html
+│  index.js
+└  store.js

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
 import R from "ramda";
 
-import { attemptGetTodos } from "_thunks/todos";
-import TodoSection from "_templates/TodoSection";
+import { attemptGetMachineKeys } from "_thunks/machineKeys";
+import MachineKeySection from "_templates/MachineKeySection";
 
 export default function TodoPage() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ export default function TodoPage() {
     if (R.isEmpty(user)) {
       dispatch(push("/login"));
     } else {
-      dispatch(attemptGetTodos())
+      dispatch(attemptGetMachineKeys())
         .catch(R.identity)
         .then(() => setLoading(false));
     }
@@ -25,7 +25,7 @@ export default function TodoPage() {
   return (
     !loading && (
       <div className="todo-page page">
-        <TodoSection />
+        <MachineKeySection />
       </div>
     )
   );
