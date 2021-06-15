@@ -17,29 +17,37 @@ import { dispatchError } from "_utils/api";
 export const attemptGetMachineKeys = () => (dispatch) =>
   getMachineKeys()
     .then((data) => {
+      console.log("got keys from backend");
       const machineKeys = R.map(
-        (key) => R.omit(["Id"], R.assoc("id", key._id, snakeToCamelCase(key))),
+        (machineKey) =>
+          R.omit(
+            ["Id"],
+            R.assoc("id", machineKey._id, snakeToCamelCase(machineKey))
+          ),
         data.machineKeys
       );
-
+      console.log("attempt get machine keys");
+      console.log(machineKeys);
       dispatch(setMachineKeys(machineKeys));
       return data.machineKeys;
     })
     .catch(dispatchError(dispatch));
 
-export const attemptAddMachineKey = (name, key) => (dispatch) =>
-  postMachineKey({ name: name, key: key })
+export const attemptAddMachineKey = (name, key) => (dispatch) => {
+  postMachineKey({ name: name, public_key: key })
     .then((data) => {
+      console.log("dataIGot");
+      console.log(data);
+
       const machineKey = R.omit(
         ["Id"],
         R.assoc("id", data.machineKey._id, snakeToCamelCase(data.machineKey))
       );
-
       dispatch(addMachineKey(machineKey));
       return data.user;
     })
     .catch(dispatchError(dispatch));
-
+};
 export const attemptDeleteMachineKey = (id) => (dispatch) =>
   deleteMachineKey({ id })
     .then((data) => {

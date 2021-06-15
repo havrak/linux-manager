@@ -8,12 +8,12 @@ export const setMachineKeys = (machineKeys) => ({
   machineKeys,
 });
 
-export const addMachineKey = ({ id, name, key, createdAt }) => ({
+export const addMachineKey = ({ id, name, publicKey, createdAt }) => ({
   type: ADD_MACHINEKEY,
-  createdAt,
   id,
   name,
-  key,
+  publicKey,
+  createdAt,
 });
 
 export const removeMachineKey = (id) => ({

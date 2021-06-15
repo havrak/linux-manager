@@ -3,7 +3,9 @@ import { store as RNC } from "react-notifications-component";
 
 import { logout } from "_actions/user";
 
-export const handleSuccess = (resp) => resp.body;
+export const handleSuccess = (resp) => {
+  return resp.body;
+};
 
 export const handleError = (error) => {
   if (error.response) {

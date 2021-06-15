@@ -2,7 +2,9 @@
   .machineKey-section {
     background-color: $whitesmoke;
   }
-
+	.add-machineKeys{
+		padding: 10px;
+	}
   .space-right {
     margin-right: .75rem;
   }
@@ -35,7 +37,11 @@
     }
   }
 
-  .confirm-modal {
+	.machineKey-notice{
+		text-align: center;
+	}
+
+	.confirm-modal {
     .modal-content {
       max-width: 400px;
     }

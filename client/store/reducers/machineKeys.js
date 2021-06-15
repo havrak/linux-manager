@@ -9,18 +9,22 @@ import {
 
 import { LOGOUT_USER } from "_actions/user";
 
-export function machineKey(
-  //state = {
-  //  completed: false,
-  //},
-  action
-) {
+export function machineKey(state = { active: true }, action) {
   switch (action.type) {
     case ADD_MACHINEKEY:
+      console.log("data");
+      console.log(
+        update(state, {
+          id: { $set: action.id },
+          name: { $set: action.name },
+          publicKey: { $set: action.publicKey },
+          createdAt: { $set: action.createdAt },
+        })
+      );
       return update(state, {
         id: { $set: action.id },
         name: { $set: action.name },
-        key: { $set: action.key },
+        publicKey: { $set: action.publicKey },
         createdAt: { $set: action.createdAt },
       });
     default:
@@ -29,14 +33,14 @@ export function machineKey(
 }
 
 export default function machineKeys(state = [], action) {
-  const index = R.findIndex(R.propEq("id", action.id), state);
+  const index = R.findIndex(R.propEq("id", action.id), false);
   //const updatedAtIndex = { $splice: [[index, 1, todo(state[index], action)]] };
 
   switch (action.type) {
     case SET_MACHINEKEYS:
       return update(state, { $set: action.machineKeys });
     case ADD_MACHINEKEY:
-      return update(state, { $push: [machineKeys(action)] });
+      return update(state, { $push: [machineKey(undefined, action)] });
     case REMOVE_MACHINEKEY:
       return update(state, { $splice: [[index, 1]] });
     case LOGOUT_USER:

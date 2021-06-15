@@ -77,12 +77,9 @@ export default function Navigation({ pathname }) {
                 hoverable
                 link
               >
-                <Image size="32x32">
-                  <Image.Content
-                    className="profile-img"
-                    src={user.usernameCase}
-                  />
-                </Image>
+                <Title size="6" className="username">
+                  {user.usernameCase}
+                </Title>
                 <span className="dropdown-caret" />
               </Navbar.Item>
             )}

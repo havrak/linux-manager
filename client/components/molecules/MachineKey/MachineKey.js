@@ -14,34 +14,33 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons/faTrashAlt";
 import { attemptDeleteMachineKey } from "_thunks/machineKeys";
 import ConfirmModal from "_organisms/ConfirmModal";
 
-const fromNow = (date) =>
-  formatDistanceToNow(parseISO(date), { addSuffix: true });
+//const fromNow = (date) =>
+//  formatDistanceToNow(parseISO(date), { addSuffix: true });
 
-export default function MachineKey({ id, name, key, createdAt }) {
+export default function MachineKey({ id, name, publicKey, createdAt }) {
   const dispatch = useDispatch();
-
+  console.log(publicKey);
   // const [name, setName] = useState(name);
   // const [key, setKey] = useState(key);
+  //setUpdatedMessage(updatedAt ? fromNow(updatedAt) : "");
   const [confirm, setConfirm] = useState(false);
-  const [createdMessage, setCreatedMessage] = useState("");
+  //const [createdMessage, setCreatedMessage] = useState("");
 
-  const updateMessages = () => {
-    setUpdatedMessage(updatedAt ? fromNow(updatedAt) : "");
-    setCreatedMessage(fromNow(createdAt));
-  };
+  //const updateMessages = () => {
+  //  setCreatedMessage(fromNow(createdAt));
+  //};
 
-  useEffect(() => {
-    updateMessages();
-    const interval = window.setInterval(updateMessages, 1000);
+  //useEffect(() => {
+  //  updateMessages();
+  //  const interval = window.setInterval(updateMessages, 1000);
 
-    return () => clearInterval(interval);
-  }, [updatedAt]);
+  //  return () => clearInterval(interval);
+  //});
 
   const openModal = () => setConfirm(true);
   const closeModal = () => setConfirm(false);
 
   const deleteMachineKey = () => dispatch(attemptDeleteMachineKey(id));
-
   return (
     <li className="todo box">
       <article className="media">
@@ -49,22 +48,16 @@ export default function MachineKey({ id, name, key, createdAt }) {
         <div className="media-content">
           <div className="content">
             <p>
-              <small>{`created ${createdMessage}`}</small>
+              <small>{`created ${createdAt}`}</small>
             </p>
-            <p>{key}</p>
-            <p>{name}</p>
+            <h5>{name}</h5>
+            <p>{publicKey}</p>
           </div>
 
           <nav className="level is-mobile">
-            <div className="level-left">
-              {!!updatedAt && <small>{`edited ${updatedMessage}`}</small>}
-            </div>
+            <div className="level-left"></div>
             <div className="level-right">
-              <span
-                className="icon"
-                onClick={openModal}
-                onKeyPress={cancelEdit}
-              >
+              <span className="icon" onClick={openModal} onKeyPress={openModal}>
                 <FontAwesomeIcon icon={faTrashAlt} size="lg" />
               </span>
             </div>
@@ -81,13 +74,9 @@ export default function MachineKey({ id, name, key, createdAt }) {
   );
 }
 
-Todo.propTypes = {
+MachineKey.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  key: PropTypes.string.isRequired,
+  publicKey: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
 };
-
-// Todo.defaultProps = {
-//   updatedAt: null,
-// };

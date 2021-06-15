@@ -10,13 +10,13 @@ router.get("/key", requireAuth, (req, res) => {
   MachineKey.find(
     { user: req.user.id },
     { __v: 0, user: 0 },
-    (err, machinesKeys) => {
+    (err, machineKeys) => {
       if (err) {
         res.status(400).send({ message: "Get users failed", err });
       } else {
         res.send({
           message: "All public keys retrieved successfully",
-          machinesKeys,
+          machineKeys,
         });
       }
     }
@@ -25,7 +25,6 @@ router.get("/key", requireAuth, (req, res) => {
 
 router.post("/key", requireAuth, (req, res) => {
   req.body.user = req.user.id;
-
   const newMachineKey = MachineKey(req.body);
 
   newMachineKey.save((err, savedMachineKey) => {
@@ -34,7 +33,7 @@ router.post("/key", requireAuth, (req, res) => {
     } else {
       res.send({
         message: "MachineKey create successfully",
-        todo: savedMachineKey,
+        machineKey: savedMachineKey,
       });
     }
   });
