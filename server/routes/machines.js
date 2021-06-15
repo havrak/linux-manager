@@ -1,6 +1,6 @@
 const express = require("express");
 const { requireAuth } = require("./middleware");
-const { MachineKey } = require("../database/schemas");
+const { MachineKey, Data } = require("../database/schemas");
 
 const openpgp = require("openpgp");
 const router = express.Router();
@@ -66,6 +66,23 @@ router.get("/collector", requireAuth, (req, res) => {
   res.download(path)("./server/config/collector.zip");
 });
 
+router.get("/data", requireAuth, (req, res) => {
+  Data.find(
+    { user: req.user.id },
+    { __v: 0, user: 0 },
+    (err, systemInformations) => {
+      if (err) {
+        res.status(400).send({ message: "Failed to retrieve data ", err });
+      } else {
+        res.send({
+          message: "Data about all users machine retrieved successfully",
+          systemInformations,
+        });
+      }
+    }
+  );
+});
+
 router.post("/data", (req, res) => {
   MachineKey.find(
     {
@@ -73,6 +90,7 @@ router.post("/data", (req, res) => {
     },
     { __v: 0 },
     (err, result) => {
+      // check if already is data in databse, if more than 12 or whatever delete oldest
       if (err) throw err;
       req.body.user = result[0].user;
       openpgp.readKey({ armoredKey: req.body.publicKey }).then((publicKey) => {
@@ -85,10 +103,21 @@ router.post("/data", (req, res) => {
               if (verified.signatures[0].valid) {
                 const informationAboutMachine = JSON.parse(verified.data);
                 console.log(informationAboutMachine);
-                // woo ho we have confirmend signature
-                const data = {
+                const uwuwu = {
                   user: result[0].user,
+                  public_key: result[0].public_key,
+                  name: result[0].name,
+                  systeminformation: verified.data,
                 };
+                const data = Data(uwuwu);
+
+                data.save((err, savedData) => {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    console.log(savedData);
+                  }
+                });
               }
             });
         });
