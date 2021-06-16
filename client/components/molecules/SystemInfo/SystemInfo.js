@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import Chart from "react-google-charts";
+import DiskList from "_molecules/DiskList";
 
 export default function SystemInfo(sysInfo) {
-  console.log("creating kekk");
-  console.log(sysInfo);
   const dispatch = useDispatch();
 
   const jsonInfo = JSON.parse(sysInfo.systemInformation);
-  const cpuFree = jsonInfo.specs.cpu.maxCPUSpeed - jsonInfo.specs.cpu.usage;
-  console.log(cpuFree);
 
   const openModal = () => setConfirm(true);
   const closeModal = () => setConfirm(false);
@@ -47,7 +44,7 @@ export default function SystemInfo(sysInfo) {
                   chartType="PieChart"
                   loader={<div>Loading Chart</div>}
                   data={[
-                    ["Task", "Hours per Day"],
+                    ["", ""],
                     [
                       "Free",
                       jsonInfo.specs.cpu.maxCPUSpeed - jsonInfo.specs.cpu.usage,
@@ -69,12 +66,14 @@ export default function SystemInfo(sysInfo) {
                   chartType="PieChart"
                   loader={<div>Loading Chart</div>}
                   data={[
-                    ["Task", "Hours per Day"],
+                    ["", ""],
                     [
-                      "Free",
-                      jsonInfo.specs.ram.capacity - jsonInfo.specs.ram.usage,
+                      "Free (MB)",
+                      (jsonInfo.specs.ram.capacity - jsonInfo.specs.ram.usage) /
+                        1024 /
+                        1024,
                     ],
-                    ["Used", jsonInfo.specs.ram.capacity],
+                    ["Used (MB)", jsonInfo.specs.ram.capacity / 1024 / 1024],
                   ]}
                   options={{
                     title: "RAM",
@@ -85,6 +84,7 @@ export default function SystemInfo(sysInfo) {
                 />
               </div>
             </div>
+            <DiskList {...jsonInfo.specs.disk} />
           </div>
         </div>
       </article>
