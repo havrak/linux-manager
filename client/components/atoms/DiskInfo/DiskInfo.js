@@ -4,9 +4,6 @@ import { useDispatch } from "react-redux";
 import Chart from "react-google-charts";
 
 export default function DiskInfo(diskInfo) {
-  console.log("asss");
-  console.log(diskInfo);
-
   return (
     <div className="disk-info">
       <div className="graph">

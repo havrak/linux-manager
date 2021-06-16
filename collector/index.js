@@ -145,7 +145,7 @@ try {
   gotPassConfig = true;
   gatherData().then(() => {
     console.log(dataStructure);
-    //sendData();
+    sendData();
   });
 } catch (e) {
   if (gotPassConfig) {

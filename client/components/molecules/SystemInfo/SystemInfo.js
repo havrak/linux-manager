@@ -8,6 +8,7 @@ export default function SystemInfo(sysInfo) {
   const dispatch = useDispatch();
 
   const jsonInfo = JSON.parse(sysInfo.systemInformation);
+  console.log(sysInfo.cpuLog);
 
   const openModal = () => setConfirm(true);
   const closeModal = () => setConfirm(false);

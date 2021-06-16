@@ -3,6 +3,7 @@ const { requireAuth } = require("./middleware");
 const { MachineKey, Data } = require("../database/schemas");
 
 const openpgp = require("openpgp");
+const { json } = require("body-parser");
 const router = express.Router();
 
 module.exports = router;
@@ -68,31 +69,104 @@ router.get("/collector", requireAuth, (req, res) => {
 
 router.get("/data", requireAuth, (req, res) => {
   //console.log("yaayyashkasdbkfdsahbjfabkh");
-  Data.find(
-    { user: req.user.id },
+  MachineKey.find(
+    {
+      user: req.user.id,
+    },
     { __v: 0, user: 0 },
-    (err, systemInformations) => {
-      //console.log(systemInformations);
+    (err, usersMachines) => {
       if (err) {
-        res.status(400).send({ message: "Failed to retrieve data ", err });
-      } else {
-        const toReturn = new Array();
-        //systemInformations.forEach((system) => {
-        //  console.log("formating");
-        //  const data = JSON.parse(system.system_information);
-        //  system.system_information = { data };
-        // console.log(system.system_information);
-        //  toReturn.push(system);
-        //});
-        //console.log("sending");
-        //console.log(toReturn);
-        res.send({
-          message: "Data about all users machine retrieved successfully",
-          systemInformations: systemInformations,
+        res.status(400).send({
+          message: "Failed to find machines that belong to user",
+          err,
         });
+      } else {
+        let toReturn = new Array();
+        let variable = 0;
+        usersMachines.forEach((machine) => {
+          //console.log("machine is: ");
+          //console.log(machine);
+          Data.find(
+            { public_key: machine.public_key },
+            {},
+            (err, systemInfos) => {
+              if (systemInfos.length > 1) {
+                let toPush = {
+                  _id: systemInfos[systemInfos.length - 1]._id,
+                  user: systemInfos[systemInfos.length - 1].user,
+                  public_key: systemInfos[systemInfos.length - 1].public_key,
+                  name: systemInfos[systemInfos.length - 1].name,
+                  system_information:
+                    systemInfos[systemInfos.length - 1].system_information,
+                  logged_at: systemInfos[systemInfos.length - 1].logged_at,
+                  cpu_log: undefined,
+                  ram_log: undefined,
+                  timestamp_log: undefined,
+                };
+                //systemInfos[systemInfos.length - 1]; // if one doesn't fuck up last position will be newest
+                //console.log(toPush);
+                toPush.cpu_log = new Array();
+                toPush.ram_log = new Array();
+                toPush.timestamp_log = new Array();
+                for (let i = systemInfos.length - 1; i >= 0; i--) {
+                  if (
+                    new Date(systemInfos[i].logged_at).getTime() + 7200000 >=
+                    Date.now()
+                  ) {
+                    const jsonInfo = JSON.parse(
+                      systemInfos[i].system_information
+                    );
+                    toPush.cpu_log.push(jsonInfo.specs.cpu.usage);
+                    toPush.ram_log.push(jsonInfo.specs.ram.usage);
+                    toPush.timestamp_log.push(systemInfos[i].logged_at);
+                  }
+                }
+                console.log("to push");
+                console.log(toPush);
+                console.log(toPush.cpu_log);
+                toReturn.push(toPush);
+              }
+              variable++;
+              if (variable == usersMachines.length) {
+                res.send({
+                  message:
+                    "Data about all users machine retrieved successfully",
+                  systemInformations: toReturn,
+                });
+              }
+            }
+          );
+        });
+        //
       }
     }
   );
+
+  //Data.find(
+  //  { user: req.user.id },
+  //  { __v: 0, user: 0 },
+  //  (err, systemInformations) => {
+  //    //console.log(systemInformations);
+  //    if (err) {
+  //      res.status(400).send({ message: "Failed to retrieve data ", err });
+  //    } else {
+  //      //const toReturn = new Array();
+  //      //systemInformations.forEach((system) => {
+  //      //  console.log("formating");
+  //      //  const data = JSON.parse(system.system_information);
+  //      //  system.system_information = { data };
+  //      // console.log(system.system_information);
+  //      //  toReturn.push(system);
+  //      //});
+  //      //console.log("sending");
+  //      //console.log(toReturn);
+  //      res.send({
+  //        message: "Data about all users machine retrieved successfully",
+  //        systemInformations: systemInformations,
+  //      });
+  //    }
+  //  }
+  //);
 });
 
 router.post("/data", (req, res) => {
