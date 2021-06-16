@@ -68,12 +68,12 @@ export default function SystemInfo(sysInfo) {
                   data={[
                     ["", ""],
                     [
-                      "Free (MB)",
+                      "Free (GB)",
                       (jsonInfo.specs.ram.capacity - jsonInfo.specs.ram.usage) /
                         1024 /
                         1024,
                     ],
-                    ["Used (MB)", jsonInfo.specs.ram.capacity / 1024 / 1024],
+                    ["Used (GB)", jsonInfo.specs.ram.usage / 1024 / 1024],
                   ]}
                   options={{
                     title: "RAM",

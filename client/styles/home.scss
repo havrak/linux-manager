@@ -12,12 +12,16 @@
   }
 	h6{
 		margin-top: 8px;
+		text-align: center;
 	}
 	.graphs{
 		text-align: center;
 	}
 
 	.graph{
+		display: inline-flex;
+	}
+	.disk-info{
 		display: inline-flex;
 	}
   .icon {

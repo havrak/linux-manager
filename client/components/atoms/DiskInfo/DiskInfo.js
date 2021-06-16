@@ -8,7 +8,7 @@ export default function DiskInfo(diskInfo) {
   console.log(diskInfo);
 
   return (
-    <div className="content">
+    <div className="disk-info">
       <div className="graph">
         <Chart
           width={"400px"}
@@ -17,8 +17,8 @@ export default function DiskInfo(diskInfo) {
           loader={<div>Loading Chart</div>}
           data={[
             ["", ""],
-            ["Free (MB)", (diskInfo.size - diskInfo.used) / 1024 / 1024],
-            ["Used (MB)", diskInfo.used / 1024 / 1024],
+            ["Free (GB)", (diskInfo.size - diskInfo.used) / 1024 / 1024],
+            ["Used (GB)", diskInfo.used / 1024 / 1024],
           ]}
           options={{
             title: `${diskInfo.mount}, (${diskInfo.device})`,

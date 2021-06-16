@@ -63,7 +63,10 @@ function gatherData() {
           .mem()
           .then((result) => {
             dataStructure.specs.ram.capacity = result.total;
-            dataStructure.specs.ram.usage = result.used;
+            dataStructure.specs.ram.usage = result.active;
+            console.log(result.active / 1024 / 1024);
+            console.log(result.total / 1024 / 1024);
+            console.log(result.available / 1024 / 1024);
             sysinfo
               .osInfo()
               .then((result) => {
@@ -142,7 +145,7 @@ try {
   gotPassConfig = true;
   gatherData().then(() => {
     console.log(dataStructure);
-    sendData();
+    //sendData();
   });
 } catch (e) {
   if (gotPassConfig) {
