@@ -9,6 +9,6 @@ Program is made up of three different parts -- server, client and collector.
 Collector is simple utility that gathers data from machine and sends them to server signed with pgpkeys.
 Client and sever is self-explanatory.
 
-![screenshot](./presentation/1 - Homepage.png)
+![screenshot](presentation/1homepage.png)
 
 
