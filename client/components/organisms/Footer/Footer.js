@@ -13,7 +13,7 @@ export default function FooterComponent() {
         <Content className="has-text-centered">
           <p>{`Copyright Ⓒ ${year} Linux Manager`}</p>
           <p className="credits">
-            {`Made by Kryštof Havránek, originally based on `}
+            {`Made with love by Kryštof Havránek, originally based on `}
             <a href="https://github.com/djizco/mern-boilerplate">
               Mern Manager
             </a>

@@ -1,7 +1,4 @@
 .home-page {
-	.add-machineKeys{
-		padding: 10px;
-	}
   .space-right {
     margin-right: .75rem;
   }
@@ -21,6 +18,10 @@
 	.graph{
 		display: inline-flex;
 	}
+	.disk-list{
+		text-align: center;
+	}
+
 	.disk-info{
 		display: inline-flex;
 	}

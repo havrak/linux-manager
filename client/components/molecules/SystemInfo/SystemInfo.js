@@ -13,6 +13,23 @@ export default function SystemInfo(sysInfo) {
   const openModal = () => setConfirm(true);
   const closeModal = () => setConfirm(false);
 
+  const generateCpuData = () => {
+    let toReturn = new Array();
+    toReturn.push(["", ""]);
+    for (let i = 0; i < sysInfo.cpuLog.length; i++) {
+      toReturn.push([sysInfo.timestampLog[i], sysInfo.cpuLog[i]]);
+    }
+    return toReturn;
+  };
+  const generateRamData = () => {
+    let toReturn = new Array();
+    toReturn.push(["", ""]);
+    for (let i = 0; i < sysInfo.ramLog.length; i++) {
+      toReturn.push([sysInfo.timestampLog[i], sysInfo.ramLog[i]]);
+    }
+    return toReturn;
+  };
+
   return (
     <li className="sysinfo box">
       <article className="media">
@@ -86,6 +103,54 @@ export default function SystemInfo(sysInfo) {
               </div>
             </div>
             <DiskList {...jsonInfo.specs.disk} />
+            <hr />
+            <h6> History </h6>
+            <div className="graphs">
+              <div className="graph">
+                <Chart
+                  width={"400px"}
+                  height={"300px"}
+                  chartType="BarChart"
+                  loader={<div>Loading Chart</div>}
+                  data={generateCpuData()}
+                  options={{
+                    title: "Usage of CPU",
+                    chartArea: { width: "50%" },
+                    hAxis: {
+                      title: "Usage in Ghz",
+                      minValue: 0,
+                    },
+                    vAxis: {
+                      title: "Timestamp",
+                    },
+                  }}
+                  // For tests
+                  rootProps={{ "data-testid": "1" }}
+                />
+              </div>
+              <div className="graph">
+                <Chart
+                  width={"400px"}
+                  height={"300px"}
+                  chartType="BarChart"
+                  loader={<div>Loading Chart</div>}
+                  data={generateRamData()}
+                  options={{
+                    title: "Usage of RAM",
+                    chartArea: { width: "50%" },
+                    hAxis: {
+                      title: "Usage in GB",
+                      minValue: 0,
+                    },
+                    vAxis: {
+                      title: "Timestamp",
+                    },
+                  }}
+                  // For tests
+                  rootProps={{ "data-testid": "1" }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </article>
