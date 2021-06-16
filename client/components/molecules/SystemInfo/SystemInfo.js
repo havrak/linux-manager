@@ -25,7 +25,10 @@ export default function SystemInfo(sysInfo) {
     let toReturn = new Array();
     toReturn.push(["", ""]);
     for (let i = 0; i < sysInfo.ramLog.length; i++) {
-      toReturn.push([sysInfo.timestampLog[i], sysInfo.ramLog[i]]);
+      toReturn.push([
+        sysInfo.timestampLog[i],
+        sysInfo.ramLog[i] / 1024 / 1024 / 1024,
+      ]);
     }
     return toReturn;
   };
@@ -39,7 +42,7 @@ export default function SystemInfo(sysInfo) {
             <p>
               <small>{`loggedAt ${sysInfo.loggedAt}`}</small>
             </p>
-            <h5>{sysInfo.name}</h5>
+            <h4>{sysInfo.name}</h4>
             <hr />
             <h6> SystemInfo </h6>
             OS name: {jsonInfo.system.os.name}
@@ -116,6 +119,7 @@ export default function SystemInfo(sysInfo) {
                   options={{
                     title: "Usage of CPU",
                     chartArea: { width: "50%" },
+                    legend: { position: "none" },
                     hAxis: {
                       title: "Usage in Ghz",
                       minValue: 0,
@@ -138,6 +142,7 @@ export default function SystemInfo(sysInfo) {
                   options={{
                     title: "Usage of RAM",
                     chartArea: { width: "50%" },
+                    legend: { position: "none" },
                     hAxis: {
                       title: "Usage in GB",
                       minValue: 0,

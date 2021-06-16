@@ -58,45 +58,54 @@ function gatherData() {
       .then((result) => {
         dataStructure.specs.cpu.model = result.brand;
         dataStructure.specs.cpu.maxCPUSpeed = result.speedMax;
-        dataStructure.specs.cpu.usage = result.speed;
         sysinfo
-          .mem()
+          .cpuCurrentSpeed()
           .then((result) => {
-            dataStructure.specs.ram.capacity = result.total;
-            dataStructure.specs.ram.usage = result.active;
-            console.log(result.active / 1024 / 1024);
-            console.log(result.total / 1024 / 1024);
-            console.log(result.available / 1024 / 1024);
+            dataStructure.specs.cpu.usage = result.avg;
             sysinfo
-              .osInfo()
+              .mem()
               .then((result) => {
-                dataStructure.system.os.name = result.distro;
-                dataStructure.system.os.version = result.release;
-                dataStructure.system.os.kernel = result.kernel;
-                exec("getPackageManager.sh", (err, stdout, stderr) => {
-                  const result = stdout.substr(0, stdout.length - 1).split(","); // command returns string with escape characted
-                  dataStructure.system.packages.nameOfPackageManager =
-                    result[0];
-                  dataStructure.system.packages.installed = result[1];
-                  dataStructure.system.packages.updatable = result[2];
-                  sysinfo
-                    .fsSize()
-                    .then((sizes) => {
-                      dataStructure.specs.disk = new Array(sizes.length);
-                      for (let i = 0; i < sizes.length; i++) {
-                        dataStructure.specs.disk[i] = new Disk(
-                          sizes[i].fs,
-                          sizes[i].mount,
-                          sizes[i].size,
-                          sizes[i].used
-                        );
-                      }
-                      resolve(true);
-                    })
-                    .catch((error) => {
-                      throw error;
+                dataStructure.specs.ram.capacity = result.total;
+                dataStructure.specs.ram.usage = result.active;
+                console.log(result.active / 1024 / 1024);
+                console.log(result.total / 1024 / 1024);
+                console.log(result.available / 1024 / 1024);
+                sysinfo
+                  .osInfo()
+                  .then((result) => {
+                    dataStructure.system.os.name = result.distro;
+                    dataStructure.system.os.version = result.release;
+                    dataStructure.system.os.kernel = result.kernel;
+                    exec("getPackageManager.sh", (err, stdout, stderr) => {
+                      const result = stdout
+                        .substr(0, stdout.length - 1)
+                        .split(","); // command returns string with escape characted
+                      dataStructure.system.packages.nameOfPackageManager =
+                        result[0];
+                      dataStructure.system.packages.installed = result[1];
+                      dataStructure.system.packages.updatable = result[2];
+                      sysinfo
+                        .fsSize()
+                        .then((sizes) => {
+                          dataStructure.specs.disk = new Array(sizes.length);
+                          for (let i = 0; i < sizes.length; i++) {
+                            dataStructure.specs.disk[i] = new Disk(
+                              sizes[i].fs,
+                              sizes[i].mount,
+                              sizes[i].size,
+                              sizes[i].used
+                            );
+                          }
+                          resolve(true);
+                        })
+                        .catch((error) => {
+                          throw error;
+                        });
                     });
-                });
+                  })
+                  .catch((error) => {
+                    throw error;
+                  });
               })
               .catch((error) => {
                 throw error;
