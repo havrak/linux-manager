@@ -28,13 +28,15 @@ import { LOGOUT_USER } from "_actions/user";
 //   }
 // }
 
-export default function machineKeys(state = [], action) {
+export default function systemInformations(state = [], action) {
   const index = R.findIndex(R.propEq("id", action.id), false);
   //const updatedAtIndex = { $splice: [[index, 1, todo(state[index], action)]] };
+  console.log("this fucking function has been called by some garbae");
+  console.log(action);
 
   switch (action.type) {
     case SET_SYSTEMINFORMATIONS:
-      return update(state, { $set: action.machineKeys });
+      return update(state, { $set: action.systemInformations });
     // case ADD_MACHINEKEY:
     //   return update(state, { $push: [machineKey(undefined, action)] });
     // case REMOVE_MACHINEKEY:

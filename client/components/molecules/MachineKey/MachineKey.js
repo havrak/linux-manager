@@ -45,7 +45,7 @@ export default function MachineKey({ id, name, publicKey, createdAt }) {
     closeModal();
   };
   return (
-    <li className="todo box">
+    <li className="machineKey box">
       <article className="media">
         <figure className="media-left"></figure>
         <div className="media-content">

@@ -48,6 +48,17 @@ export default function UserDropdown({ open, closeDropdown }) {
               Logout
             </a>
           </li>
+          <hr className="is-hidden-desktop" />
+          <li className="dropdown-item is-hidden-desktop">
+            <Link to="/home" onClick={closeDropdown}>
+              Home
+            </Link>
+          </li>
+          <li className="dropdown-item is-hidden-desktop">
+            <Link to="/machinekey" onClick={closeDropdown}>
+              Machine List
+            </Link>
+          </li>
         </ul>
       </div>
     )

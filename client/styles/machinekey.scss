@@ -40,7 +40,9 @@
 	.machineKey-notice{
 		text-align: center;
 	}
-
+	.box p{
+ 		word-wrap: anywhere;
+	}
 	.confirm-modal {
     .modal-content {
       max-width: 400px;

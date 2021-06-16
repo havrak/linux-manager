@@ -20,7 +20,7 @@ export default function TodoPage() {
       dispatch(attemptGetMachineKeys())
         .catch(R.identity)
         .then(() => setLoading(false));
-      dispatch(attemptGetSystemInformation()).catch(R.identity).then();
+      //dispatch(attemptGetSystemInformation()).catch(R.identity).then();
     }
   }, []);
 
