@@ -1,41 +1,17 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { parseISO, formatDistanceToNow } from "date-fns";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons/faTrashAlt";
-//import { faBan } from "@fortawesome/free-solid-svg-icons/faBan";
-//import { faPencilAlt } from "@fortawesome/free-solid-svg-icons/faPencilAlt";
-//import { faSave } from "@fortawesome/free-solid-svg-icons/faSave";
-//import { faSquare } from "@fortawesome/free-regular-svg-icons/faSquare";
-//import { faCheckSquare } from "@fortawesome/free-regular-svg-icons/faCheckSquare";
 
 import { attemptDeleteMachineKey } from "_thunks/machineKeys";
 import ConfirmModal from "_organisms/ConfirmModal";
 
-//const fromNow = (date) =>
-//  formatDistanceToNow(parseISO(date), { addSuffix: true });
-
 export default function MachineKey({ id, name, publicKey, createdAt }) {
   const dispatch = useDispatch();
-  console.log(publicKey);
-  // const [name, setName] = useState(name);
-  // const [key, setKey] = useState(key);
-  //setUpdatedMessage(updatedAt ? fromNow(updatedAt) : "");
+
   const [confirm, setConfirm] = useState(false);
-  //const [createdMessage, setCreatedMessage] = useState("");
-
-  //const updateMessages = () => {
-  //  setCreatedMessage(fromNow(createdAt));
-  //};
-
-  //useEffect(() => {
-  //  updateMessages();
-  //  const interval = window.setInterval(updateMessages, 1000);
-
-  //  return () => clearInterval(interval);
-  //});
 
   const openModal = () => setConfirm(true);
   const closeModal = () => setConfirm(false);

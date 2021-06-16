@@ -9,8 +9,6 @@ import { dispatchError } from "_utils/api";
 export const attemptGetSystemInformation = () => (dispatch) =>
   getSystemInformations()
     .then((data) => {
-      console.log("Received system info");
-      //console.log(data.systemInformations[0].system_information);
       const systemInformations = R.map(
         (sysinfo) =>
           R.omit(["Id"], R.assoc("id", sysinfo._id, snakeToCamelCase(sysinfo))),

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
+import Chart from "react-google-charts";
 
 export default function SystemInfo(sysInfo) {
   console.log("creating kekk");
@@ -8,6 +9,8 @@ export default function SystemInfo(sysInfo) {
   const dispatch = useDispatch();
 
   const jsonInfo = JSON.parse(sysInfo.systemInformation);
+  const cpuFree = jsonInfo.specs.cpu.maxCPUSpeed - jsonInfo.specs.cpu.usage;
+  console.log(cpuFree);
 
   const openModal = () => setConfirm(true);
   const closeModal = () => setConfirm(false);
@@ -19,11 +22,69 @@ export default function SystemInfo(sysInfo) {
         <div className="media-content">
           <div className="content">
             <p>
-              <small>{`created ${sysInfo.loggedIn}`}</small>
+              <small>{`loggedAt ${sysInfo.loggedAt}`}</small>
             </p>
             <h5>{sysInfo.name}</h5>
             <hr />
             <h6> SystemInfo </h6>
+            OS name: {jsonInfo.system.os.name}
+            <br />
+            OS Version: {jsonInfo.system.os.version}
+            <br />
+            Kernel release: {jsonInfo.system.os.kernel}
+            <h6> Packages </h6>
+            Package manager: {jsonInfo.system.packages.nameOfPackageManager}
+            <br />
+            Number of packages: {jsonInfo.system.packages.installed}
+            <br />
+            Number of updates: {jsonInfo.system.packages.updatable}
+            <br />
+            <div className="graphs">
+              <div className="graph">
+                <Chart
+                  width={"400px"}
+                  height={"400px"}
+                  chartType="PieChart"
+                  loader={<div>Loading Chart</div>}
+                  data={[
+                    ["Task", "Hours per Day"],
+                    [
+                      "Free",
+                      jsonInfo.specs.cpu.maxCPUSpeed - jsonInfo.specs.cpu.usage,
+                    ],
+                    ["Used", jsonInfo.specs.cpu.usage],
+                  ]}
+                  options={{
+                    title: "CPU",
+                    pieStartAngle: 100,
+                    pieHole: 0.4,
+                  }}
+                  rootProps={{ "data-testid": "3" }}
+                />
+              </div>
+              <div className="graph">
+                <Chart
+                  width={"400px"}
+                  height={"400px"}
+                  chartType="PieChart"
+                  loader={<div>Loading Chart</div>}
+                  data={[
+                    ["Task", "Hours per Day"],
+                    [
+                      "Free",
+                      jsonInfo.specs.ram.capacity - jsonInfo.specs.ram.usage,
+                    ],
+                    ["Used", jsonInfo.specs.ram.capacity],
+                  ]}
+                  options={{
+                    title: "RAM",
+                    pieStartAngle: 100,
+                    pieHole: 0.4,
+                  }}
+                  rootProps={{ "data-testid": "3" }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </article>

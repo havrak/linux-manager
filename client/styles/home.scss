@@ -1,4 +1,4 @@
-.homepage {
+.home-page {
 	.add-machineKeys{
 		padding: 10px;
 	}
@@ -10,7 +10,12 @@
     color: $dark-grey;
     margin-bottom: 20px;
   }
-
+	h6{
+		margin-top: 8px;
+	}
+	.graph{
+		display: inline-flex;
+	}
   .icon {
     vertical-align: middle;
 
