@@ -4,6 +4,7 @@ import { push } from "connected-react-router";
 import R from "ramda";
 
 import { attemptGetMachineKeys } from "_thunks/machineKeys";
+import { attemptGetSystemInformation } from "_thunks/systemInformations";
 import MachineKeySection from "_templates/MachineKeySection";
 
 export default function TodoPage() {
@@ -19,6 +20,7 @@ export default function TodoPage() {
       dispatch(attemptGetMachineKeys())
         .catch(R.identity)
         .then(() => setLoading(false));
+      dispatch(attemptGetSystemInformation()).catch(R.identity).then();
     }
   }, []);
 

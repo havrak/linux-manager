@@ -81,6 +81,7 @@
     "react": "^16.14.0",
     "react-bulma-companion": "^0.1.2",
     "react-dom": "^16.14.0",
+    "react-google-charts": "^3.0.15",
     "react-notifications-component": "^2.4.1",
     "react-redux": "^7.2.4",
     "react-router": "^5.2.0",

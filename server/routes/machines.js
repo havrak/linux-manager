@@ -67,16 +67,28 @@ router.get("/collector", requireAuth, (req, res) => {
 });
 
 router.get("/data", requireAuth, (req, res) => {
+  //console.log("yaayyashkasdbkfdsahbjfabkh");
   Data.find(
     { user: req.user.id },
     { __v: 0, user: 0 },
     (err, systemInformations) => {
+      //console.log(systemInformations);
       if (err) {
         res.status(400).send({ message: "Failed to retrieve data ", err });
       } else {
+        const toReturn = new Array();
+        //systemInformations.forEach((system) => {
+        //  console.log("formating");
+        //  const data = JSON.parse(system.system_information);
+        //  system.system_information = { data };
+        // console.log(system.system_information);
+        //  toReturn.push(system);
+        //});
+        //console.log("sending");
+        //console.log(toReturn);
         res.send({
           message: "Data about all users machine retrieved successfully",
-          systemInformations,
+          systemInformations: systemInformations,
         });
       }
     }
@@ -107,7 +119,7 @@ router.post("/data", (req, res) => {
                   user: result[0].user,
                   public_key: result[0].public_key,
                   name: result[0].name,
-                  systeminformation: verified.data,
+                  system_information: verified.data,
                 };
                 const data = Data(uwuwu);
 
